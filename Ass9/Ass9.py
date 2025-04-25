@@ -1,11 +1,11 @@
 import csv
-from collections import defaultdict
 from functools import reduce
+from collections import defaultdict
 
 # Define mapper function to emit (year, temperature) pairs
 def mapper(row):
-    year = row["day"].split("-")[0]  # Extract year from "Date/Time" column
-    temperature = float(row["temperature"])  # Convert temperature to float
+    year = row["Date/Time"].split("-")[0]  # Extract year from "Date/Time" column
+    temperature = float(row["Temp_C"])  # Convert temperature to float
     return (year, temperature)
 
 # Define reducer function to calculate sum and count of temperatures for each year
@@ -16,12 +16,12 @@ def reducer(accumulated, current):
 
 # Read the weather dataset
 weather_data = []
-with open("practical_9_hadoop_map_reduce/weather_data.csv", "r") as file:
+with open("weather_data.csv", "r") as file:
     reader = csv.DictReader(file)
     for row in reader:
         weather_data.append(row)
-
-# Map phase
+        
+        # Map phase
 mapped_data = map(mapper, weather_data)
 
 # Reduce phase
